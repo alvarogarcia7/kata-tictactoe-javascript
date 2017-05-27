@@ -24,14 +24,22 @@ class Board extends Component {
 
   constructor() {
     super()
-    this.state = {
+    this.initialState = {
       board: ['','','',
               '','','',
               '','',''],
-      currentPlayer: 'X',
+      player: 'X',
+    }
+    this.state = {
       moves: [],
+      board: [],
     }
   }
+
+  componentWillMount(){
+    this.replay(this.state)
+  }
+
 
   render() {
     return (
@@ -69,8 +77,8 @@ class Board extends Component {
   }
 
   replay(state) {
-    var currentPlayer = this.state.currentPlayer
-    var board = this.state.board
+    var currentPlayer = this.initialState.player
+    var board = shallowClone(this.initialState.board)
     this.state.moves.map(move => {
       if(move.type === 'put') {
         let index = move.at;
@@ -80,7 +88,11 @@ class Board extends Component {
         }
       }
     })
-    this.setState({board: board, currentPlayer: currentPlayer})
+    this.setState({board: board})
+
+    function shallowClone(obj) {
+      return Object.assign({}, obj);
+    }
   }
 }
 
