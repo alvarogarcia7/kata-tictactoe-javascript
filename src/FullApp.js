@@ -6,10 +6,6 @@ require('es6-promise').polyfill()
 
 class FullApp extends Component {
 
-  constructor() {
-    super()
-  }
-
   render() {
     return (
       <div>
@@ -24,10 +20,6 @@ class FullApp extends Component {
 
 
 class Header extends Component {
-  constructor() {
-    super()
-  }
-
   render() {
   return (<header>
     <nav>
