@@ -29,6 +29,7 @@ class Board extends Component {
               '','','',
               '','',''],
       currentPlayer: 'X',
+      moves: [],
     }
   }
 
@@ -55,21 +56,31 @@ class Board extends Component {
   }
 
   renderSquare(index) {
-    let board = this.state.board
     return (
       <Square 
-        value={board[index]} 
-        onClick={() => {makeAMove.bind(this)(index)}}
+        value={this.state.board[index]} 
+        onClick={() => {makeAMove.bind(this)(index); this.replay(this.state)}}
       />
     )
 
     function makeAMove(index) {
-      if (this.state.board[index] === '') {
-        this.state.board[index] = this.state.currentPlayer
-        let nextPlayer = this.state.currentPlayer === 'X' ? 'O' : 'X'
-        this.setState({board: board, currentPlayer: nextPlayer})
-      }
+      this.state.moves.push({type: 'put', at: index}); 
     }
+  }
+
+  replay(state) {
+    var currentPlayer = this.state.currentPlayer
+    var board = this.state.board
+    this.state.moves.map(move => {
+      if(move.type === 'put') {
+        let index = move.at;
+        if (board[index] === '') {
+          board[index] = currentPlayer
+          currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'
+        }
+      }
+    })
+    this.setState({board: board, currentPlayer: currentPlayer})
   }
 }
 
