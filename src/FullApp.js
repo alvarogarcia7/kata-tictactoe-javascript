@@ -27,6 +27,7 @@ class Header extends Component {
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/game'>Game</Link></li>
         <li><Link to='/top-scores'>Top Scores</Link></li>
+        {'serviceWorker' in navigator ? <li> Supports Offline!</li>: ''}
       </ul>
     </nav>
   </header>)
