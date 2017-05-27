@@ -80,7 +80,7 @@ class Board extends Component {
 
   componentWillMount(){
     this.props.store.subscribe('makeamove', this.replay.bind(this))
-    this.replay([])
+    this.replay(this.state.moves)
   }
 
   render() {
