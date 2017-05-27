@@ -4,10 +4,15 @@ import './App.css';
 
 class App extends Component {
 
+  constructor() {
+    super()
+    this.store = new Store()
+  }
+
   render() {
     return (
       <div>
-          <Board />
+          <Board store={this.store}/>
           {this.winner()}
       </div>
     );
@@ -17,6 +22,43 @@ class App extends Component {
     return (
         <li>winner is </li>
     )
+  }
+}
+
+class Store {
+  constructor() {
+    this.channels = {}
+  }
+
+  upsertChannel(name){
+    if(!this.channels[name]){
+      this.channels[name] = new Channel()
+    }
+    return this.channels[name]
+  }
+
+  publish(channelName, message) {
+    this.upsertChannel(channelName).publish(message)
+  }
+
+  subscribe(channelName, function_) {
+    this.upsertChannel(channelName).addSubscriber(function_)
+  }
+}
+
+class Channel {
+  constructor() {
+    this.history = []
+    this.subscribers = []
+  }
+
+  addSubscriber(function_) {
+    this.subscribers.push(function_)
+  }
+
+  publish(message) {
+    this.history.push(message)
+    this.subscribers.map(f => f(this.history))
   }
 }
 
@@ -37,7 +79,8 @@ class Board extends Component {
   }
 
   componentWillMount(){
-    this.replay()
+    this.props.store.subscribe('makeamove', this.replay.bind(this))
+    this.replay([])
   }
 
   render() {
@@ -66,19 +109,20 @@ class Board extends Component {
     return (
       <Square 
         value={this.state.board[index]} 
-        onClick={() => {makeAMove.bind(this)(index); this.replay()}}
+        onClick={() => {makeAMove.bind(this)(index)}}
       />
     )
 
     function makeAMove(index) {
-      this.state.moves.push({type: 'put', at: index}); 
+      this.props.store.publish('makeamove', {type: 'put', at: index}); 
     }
   }
 
-  replay() {
+  replay(moves) {
+    console.log(moves)
     var currentPlayer = this.initialState.player
     var board = shallowClone(this.initialState.board)
-    this.state.moves.map(move => {
+    moves.map(move => {
       if(move.type === 'put') {
         let index = move.at;
         if (board[index] === '') {
