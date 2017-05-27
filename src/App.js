@@ -5,10 +5,9 @@ import './App.css';
 class App extends Component {
 
   render() {
-    let board = <Board />;
     return (
       <div>
-          {board}
+          <Board />
           {this.winner()}
       </div>
     );
