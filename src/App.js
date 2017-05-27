@@ -22,12 +22,45 @@ class App extends Component {
 
 class Board extends Component {
 
+  constructor() {
+    super()
+    this.state = {
+      board: [0]
+    }
+  }
+
   render() {
     return (
-      <li> bb </li>
+      <div className="board-row">
+        {this.renderSquare(0)}
+      </div>
     );
   }
 
+  renderSquare(index) {
+    let board = this.state.board
+    return (
+      <Square 
+        value={board[index]} 
+        onClick={() => {this.setState({board: increase(board, index)})}}
+      />
+    )
+
+    function increase(board, index) {
+      board[index]++
+      return board 
+    }
+  }
+}
+
+class Square extends Component {
+  render() {
+    return (
+    <button className="square" onClick={this.props.onClick}>
+       {this.props.value}
+    </button>
+    )
+  }
 }
 
 export default App;
