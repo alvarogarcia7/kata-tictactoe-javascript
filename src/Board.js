@@ -60,7 +60,7 @@ class Board extends Component {
   replay(moves) {
     var currentPlayer = this.initialState.player
     var board = shallowClone(this.initialState.board)
-    moves.map(move => {
+    moves.forEach(move => {
       let index = move.at;
       if (board[index] === '') {
         board[index] = currentPlayer
