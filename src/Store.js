@@ -5,7 +5,7 @@ class Store {
 
   upsertChannel(name){
     if(!this.channels[name]){
-      this.channels[name] = new Channel()
+      this.channels[name] = new ChannelWithHistory()
     }
     return this.channels[name]
   }
@@ -19,7 +19,7 @@ class Store {
   }
 }
 
-class Channel {
+class ChannelWithHistory {
   constructor() {
     this.history = []
     this.subscribers = []
