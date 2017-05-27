@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Store from './Store' 
 import { Board } from './Board'
+require('es6-promise').polyfill()
 
-class App extends Component {
+class Game extends Component {
 
   constructor() {
     super()
@@ -26,4 +27,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Game;
