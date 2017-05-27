@@ -37,9 +37,8 @@ class Board extends Component {
   }
 
   componentWillMount(){
-    this.replay(this.state)
+    this.replay()
   }
-
 
   render() {
     return (
@@ -67,7 +66,7 @@ class Board extends Component {
     return (
       <Square 
         value={this.state.board[index]} 
-        onClick={() => {makeAMove.bind(this)(index); this.replay(this.state)}}
+        onClick={() => {makeAMove.bind(this)(index); this.replay()}}
       />
     )
 
@@ -76,7 +75,7 @@ class Board extends Component {
     }
   }
 
-  replay(state) {
+  replay() {
     var currentPlayer = this.initialState.player
     var board = shallowClone(this.initialState.board)
     this.state.moves.map(move => {
