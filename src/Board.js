@@ -58,16 +58,19 @@ class Board extends Component {
   }
 
   replay(moves) {
-    var currentPlayer = this.initialState.player
-    var board = shallowClone(this.initialState.board)
-    moves.forEach(move => {
+    const initialState = {
+      board: shallowClone(this.initialState.board),
+      currentPlayer: this.initialState.player,
+    }
+    const newState = moves.reduce(({board, currentPlayer}, move) => {
       let index = move.at;
       if (board[index] === '') {
         board[index] = currentPlayer
         currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'
       }
-    })
-    this.setState({board: board})
+      return {board, currentPlayer}
+    }, initialState)
+    this.setState({board: newState.board})
 
     function shallowClone(obj) {
       return Object.assign({}, obj);
