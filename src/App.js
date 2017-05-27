@@ -25,7 +25,7 @@ class Board extends Component {
   constructor() {
     super()
     this.state = {
-      board: [0]
+      board: [0,0,0]
     }
   }
 
@@ -33,6 +33,8 @@ class Board extends Component {
     return (
       <div className="board-row">
         {this.renderSquare(0)}
+        {this.renderSquare(1)}
+        {this.renderSquare(2)}
       </div>
     );
   }
