@@ -119,16 +119,13 @@ class Board extends Component {
   }
 
   replay(moves) {
-    console.log(moves)
     var currentPlayer = this.initialState.player
     var board = shallowClone(this.initialState.board)
     moves.map(move => {
-      if(move.type === 'put') {
-        let index = move.at;
-        if (board[index] === '') {
-          board[index] = currentPlayer
-          currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'
-        }
+      let index = move.at;
+      if (board[index] === '') {
+        board[index] = currentPlayer
+        currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'
       }
     })
     this.setState({board: board})
