@@ -25,7 +25,7 @@ class Board extends Component {
   constructor() {
     super()
     this.state = {
-      board: [0,0,0]
+      board: ['','','']
     }
   }
 
@@ -44,12 +44,12 @@ class Board extends Component {
     return (
       <Square 
         value={board[index]} 
-        onClick={() => {this.setState({board: increase(board, index)})}}
+        onClick={() => {this.setState({board: setAt(board, index, 'X')})}}
       />
     )
 
-    function increase(board, index) {
-      board[index]++
+    function setAt(board, index, value) {
+      board[index] = value
       return board 
     }
   }
