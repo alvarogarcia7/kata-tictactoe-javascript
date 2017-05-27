@@ -25,7 +25,8 @@ class Board extends Component {
   constructor() {
     super()
     this.state = {
-      board: ['','','']
+      board: ['','',''],
+      currentPlayer: 'X',
     }
   }
 
@@ -44,13 +45,14 @@ class Board extends Component {
     return (
       <Square 
         value={board[index]} 
-        onClick={() => {this.setState({board: setAt(board, index, 'X')})}}
+        onClick={() => {makeAMove.bind(this)(index)}}
       />
     )
 
-    function setAt(board, index, value) {
-      board[index] = value
-      return board 
+    function makeAMove(index) {
+      board[index] = this.state.currentPlayer
+      let nextPlayer = this.state.currentPlayer === 'X' ? 'O' : 'X'
+      this.setState({board: board, currentPlayer: nextPlayer})
     }
   }
 }
