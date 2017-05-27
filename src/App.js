@@ -50,9 +50,11 @@ class Board extends Component {
     )
 
     function makeAMove(index) {
-      board[index] = this.state.currentPlayer
-      let nextPlayer = this.state.currentPlayer === 'X' ? 'O' : 'X'
-      this.setState({board: board, currentPlayer: nextPlayer})
+      if (board[index] === '') {
+        board[index] = this.state.currentPlayer
+        let nextPlayer = this.state.currentPlayer === 'X' ? 'O' : 'X'
+        this.setState({board: board, currentPlayer: nextPlayer})
+      }
     }
   }
 }
