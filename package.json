@@ -2,6 +2,7 @@
   "name": "tictactoe-tutorial-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://alvarogarcia7.github.io/kata-tictactoe-javascript",
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
