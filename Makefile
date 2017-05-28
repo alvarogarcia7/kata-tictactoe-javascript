@@ -8,3 +8,8 @@ run-production:
 run-dev:
 	yarn start
 
+.PHONY: deploy-gh-pages
+deploy-gh-pages:
+	yarn run deploy
+
+
