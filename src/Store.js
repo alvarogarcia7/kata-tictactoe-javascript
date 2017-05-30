@@ -1,6 +1,19 @@
 class Store {
   constructor() {
+    this.shouldSync = true
     this.channels = {}
+    window.addEventListener('online',  () => {
+      this.shouldSync = true
+      Object.getOwnPropertyNames(this.channels).forEach(this.sync)
+    });
+
+    window.addEventListener('offline', () => {
+      this.shouldSync = false 
+    });
+  }
+
+  sync(channelName) {
+    this.channels[channelName].sync(channelName)
   }
 
   upsertChannel(name){
@@ -32,6 +45,20 @@ class ChannelWithHistory {
   publish(message) {
     this.history.push(message)
     this.subscribers.map(f => f(this.history))
+  }
+
+  sync(channelName) {
+    const options = {
+      method: 'POST',
+      headers: myHeaders,
+      mode: 'cors',
+      cache: 'default' 
+    }
+    fetch('https://localhost:3001/api/store/'+channelName, options).then(function(response) {
+          return response.blob();
+    }).then(function(myBlob) {
+      console.log("synced from " + channelName);
+    });
   }
 }
 
