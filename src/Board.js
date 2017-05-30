@@ -19,7 +19,13 @@ class Board extends Component {
 
   componentWillMount(){
     this.props.store.subscribe('makeamove', this.replay.bind(this))
-    this.replay(this.state.moves)
+    const self = this
+    this.props.store.download('makeamove')
+      .then((moves) => {
+          self.state.moves = moves
+          console.log('passing here: ' + self.state.moves)
+          self.replay(self.state.moves)
+      })
   }
 
   render() {
