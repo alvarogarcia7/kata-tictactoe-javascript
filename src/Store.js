@@ -25,6 +25,7 @@ class Store {
 
   publish(channelName, message) {
     this.upsertChannel(channelName).publish(message)
+    this.sync(channelName)
   }
 
   subscribe(channelName, function_) {
@@ -50,15 +51,16 @@ class ChannelWithHistory {
   sync(channelName) {
     const options = {
       method: 'POST',
-      headers: myHeaders,
       mode: 'cors',
-      cache: 'default' 
+      headers:  {'Content-Type': 'application/json'},
+      body: JSON.stringify(this.history),
     }
-    fetch('https://localhost:3001/api/store/'+channelName, options).then(function(response) {
-          return response.blob();
-    }).then(function(myBlob) {
+    //const url = 'http://localhost:3001/api/store/'+channelName
+    const url = 'https://secret-forest-96342.herokuapp.com/api/store/'+channelName
+    console.log(url)
+    fetch(url, options).then(function(response) {
       console.log("synced from " + channelName);
-    });
+    }).catch(() => console.log('err'))
   }
 }
 
