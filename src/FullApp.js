@@ -24,9 +24,9 @@ class Header extends Component {
   return (<header>
     <nav>
       <ul>
-        <li><Link to='index'>Home</Link></li>
-        <li><Link to='game'>Game</Link></li>
-        <li><Link to='top-scores'>Top Scores</Link></li>
+        <li><Link to='/'>Home</Link></li>
+        <li><Link to='/game'>Game</Link></li>
+        <li><Link to='/top-scores'>Top Scores</Link></li>
         {'serviceWorker' in navigator ? <li> Supports Offline!</li>: ''}
       </ul>
     </nav>
