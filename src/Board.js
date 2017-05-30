@@ -23,8 +23,6 @@ class Board extends Component {
     this.props.store.download('makeamove')
       .then((moves) => {
           self.state.moves = moves
-          console.log('passing here: ' + self.state.moves)
-          self.replay(self.state.moves)
       })
   }
 
