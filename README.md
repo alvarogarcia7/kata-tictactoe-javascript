@@ -1,6 +1,12 @@
 # kata-tictactoe-javascript
 An offline-first application for playing TicTacToe
 
+## Technical details
+
+Playing with React, a hand-made Redux store, using some concepts of the Flux architecture.
+
+Practicing Event Sourcing in javascript
+
 ## FAQ
 
 ### The backend is down
