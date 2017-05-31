@@ -1,4 +1,4 @@
-# kata-tictactoe-javascript
+# kata tictactoe javascript
 An offline-first application for playing TicTacToe
 
 ## Technical details
