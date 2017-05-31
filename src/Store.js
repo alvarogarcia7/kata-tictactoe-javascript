@@ -5,15 +5,21 @@ class Store {
     window.addEventListener('online',  () => {
       this.shouldSync = true
       Object.getOwnPropertyNames(this.channels).forEach(this.sync)
+      this.publish('connectivity', {status: 'online'})
     });
 
     window.addEventListener('offline', () => {
       this.shouldSync = false 
+      this.publish('connectivity', {status: 'offline'})
     });
   }
 
   sync(channelName) {
     this.channels[channelName].sync(channelName)
+        .catch((e) => {
+            this.shouldSync = false
+            this.publish('connectivity', {status: 'backend-down'})
+        })
   }
 
   download(channelName) {
@@ -22,6 +28,9 @@ class Store {
         .then((moves)=> {
             this.channels[channelName].notifySubscribers()
             return moves
+        }).catch((e) => {
+            this.shouldSync = false
+            this.publish('connectivity', {status: 'backend-down'})
         })
   }
 
@@ -34,7 +43,9 @@ class Store {
 
   publish(channelName, message) {
     this.upsertChannel(channelName).publish(message)
-    this.sync(channelName)
+    if(this.shouldSync){
+      this.sync(channelName)
+    }
   }
 
   subscribe(channelName, function_) {
@@ -68,12 +79,12 @@ class ChannelWithHistory {
       headers:  {'Content-Type': 'application/json'},
       body: JSON.stringify(this.history),
     }
-    //const url = 'http://localhost:3001/api/store/'+channelName
-    const url = 'https://secret-forest-96342.herokuapp.com/api/store/'+channelName
+    const url = 'http://localhost:3001/api/store/'+channelName
+    //const url = 'https://secret-forest-96342.herokuapp.com/api/store/'+channelName
     console.log(url)
-    fetch(url, options).then(function(response) {
+    return fetch(url, options).then(function(response, err) {
       console.log("synced from " + channelName);
-    }).catch(() => console.log('err'))
+    })
   }
 
   download(channelName) {
@@ -82,10 +93,10 @@ class ChannelWithHistory {
       mode: 'cors',
       headers:  {'Content-Type': 'application/json'},
     }
-    //const url = 'http://localhost:3001/api/store/'+channelName
-    const url = 'https://secret-forest-96342.herokuapp.com/api/store/'+channelName
+    const url = 'http://localhost:3001/api/store/'+channelName
+    //const url = 'https://secret-forest-96342.herokuapp.com/api/store/'+channelName
     const self = this
-    return fetch(url, options).then(function(response) {
+    return fetch(url, options).then(function(response, err) {
         var newHistory = response.json()
         return newHistory
     }).then(r => {
@@ -95,7 +106,7 @@ class ChannelWithHistory {
         console.log('my history now: ', self.history)
         self.subscribers.map(f => f(self.history))
         return r
-    }).catch((e) => console.log('err', e))
+    })
   }
 }
 
