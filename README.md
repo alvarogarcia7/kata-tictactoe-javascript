@@ -1,6 +1,8 @@
 # kata tictactoe javascript
 An offline-first application for playing TicTacToe
 
+Frontend for [this other kata](https://github.com/alvarogarcia7/kata-tictactoe-backend-javascript/)
+
 **This app is not ready for production. Use it at your own risk**
 
 ## Technical details
