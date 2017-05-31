@@ -1,6 +1,8 @@
 # kata tictactoe javascript
 An offline-first application for playing TicTacToe
 
+**This app is not ready for production. Use it at your own risk**
+
 ## Technical details
 
 Playing with React, a hand-made Redux store, using some concepts of the Flux architecture.
